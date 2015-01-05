@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pl">
+<head>
+	<meta charset="utf-8">
+	<title>BLOSUM</title>
+	<script src="blosum.js"></script>
+	<link href="jquery-ui.css" rel="stylesheet">
+	<style>
+	body{
+		font: 85% "Trebuchet MS", sans-serif;
+		margin: 50px;
+	}	
+	table, th, td {
+    	border: 1px solid #4A4A4A;
+    	border-collapse: collapse;
+    	border-spacing: 0;
+    	text-align: center;
+	}
+	td {
+    	padding: 5px;
+	}
+	table tr:nth-child(even) {
+    	background-color: #eee;
+	}
+	table tr:nth-child(odd) {
+   		background-color:#fff;
+	}
+	table th	{
+    	background-color: #4A4A4A;
+    	color: white;
+	}
+	</style>
+</head>
+<body>
+
+<h1>Obliczanie macierzy podobieństwa metodą BLOSUM</h1>
+<br>
+<div id="accordion">
+	<h3>Wybrane sekwencje</h3>
+	<div>
+		<input type="text" id="sequence">
+		<button id="add_sequence" type="submit">Dodaj</button>
+		<button id="read_file" title="Wczytany zostanie plik dane.txt">Wczytaj z pliku</button>
+		<button id="clear">Wyczyść</button>
+		<button id="calc_a">Następny etap</button>
+		<button id="calc" title="Wykonany zostanie algorytm wraz z pomiarem czasu.">Wykonaj</button>
+    	     	            	  
+		<div id="dialog" title="Błędna sekwencja">
+    		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Sekwencja musi być niepusta oraz tej samej długości co pozostałe.</p>    
+		</div>
+		<div id="dialog_file" title="Błąd dostępu do pliku">
+    		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Nie udało się otworzyć pliku dane.txt.</p>    
+		</div>
+    	<div class="inner_beg"> </div> 
+    </div>
+	<h3>Macierz substytucji</h3>
+	<div>
+		<button id="calc_q">Następny etap</button>
+		<div class="inner_a" style="padding-top: 15px;"> </div> 
+	</div>
+	<h3>Prawdopodobieństwa wystąpienia par aminokwasów</h3>
+	<div>
+		<button id="calc_p">Następny etap</button>
+		<div class="inner_q" style="padding-top: 15px;"> </div> 
+	</div>
+	<h3>Prawdopodobieństwa wystąpienia pojedynczych symboli</h3>
+	<div>
+		<button id="calc_e">Następny etap</button>
+		<div class="inner_p" style="padding-top: 15px;"> </div>
+	</div>
+	<h3>Macierz BLOSUM</h3>
+	<div>
+		<div class="inner_e" style="padding-bottom: 15px;"> </div>
+		<button id="new">Nowe obliczenia</button>
+	</div>
+</div>
+
+<script src="external/jquery/jquery.js"></script>
+<script src="jquery-ui.js"></script>
+<script>
+$(function() {
+	$( "#accordion" ).accordion({
+		heightStyle: "content" 
+	});	
+	$( document ).tooltip();
+    $('#dialog').dialog({
+        autoOpen:false,
+        modal:true,
+        buttons: {
+        	Ok: function() {
+        		$( this ).dialog( "close" );
+        	}
+   		}
+    });
+    $('#dialog_file').dialog({
+        autoOpen:false,
+        modal:true,
+        buttons: {
+        	Ok: function() {
+        		$( this ).dialog( "close" );
+        	}
+   		}
+    });
+	$( "#add_sequence" ).button({
+		 icons: {
+			 primary: "ui-icon-circle-plus"
+			 }
+	});	
+	$( "#calc" ).button({
+		disabled:true,
+		 icons: {
+			 primary: "ui-icon-circle-check"
+			 }
+	});	
+	$( "#calc_a" ).button({
+		disabled:true,
+		 icons: {
+			 primary: "ui-icon-circle-triangle-e"
+			 }
+	});
+	$( "#calc_q" ).button({
+		disabled:true,
+		 icons: {
+			 primary: "ui-icon-circle-triangle-e"
+			 }
+	});	
+	$( "#calc_p" ).button({
+		disabled:true,
+		 icons: {
+			 primary: "ui-icon-circle-triangle-e"
+			 }
+	});	
+	$( "#calc_e" ).button({
+		disabled:true,
+		 icons: {
+			 primary: "ui-icon-circle-triangle-e"
+			 }
+	});
+	$( "#clear" ).button({
+		 icons: {
+			 primary: "ui-icon-trash"
+			 }
+	});
+	$( "#new" ).button({
+		 icons: {
+			 primary: "ui-icon-arrowrefresh-1-s"
+			 }
+	});	
+	$( "#read_file" ).button({
+		 icons: {
+			 primary: "ui-icon-folder-open"
+			 }
+	});	
+});
+</script>
+</body>
+</html>

@@ -99,23 +99,8 @@ document.addEventListener("DOMContentLoaded", function() {
 	  });
   
   $("#read_file").click(function() {
-   	  $.get('dane.txt', function(data) {
-   		  var lines = data.split(/\r\n|\r|\n/g);
-   		  var g_len = g_sequences.length;
-   		  for (var i = 0, len = lines.length; i < len; ++i) {
-   			  if(lines[i].length==0 || (g_len!=0 && lines[i].length!=g_sequences[g_len-1].length)) {
-   				  $("#dialog").dialog('open');
-   				  return;
-   			  }
-   			  g_sequences.push(lines[i]);
-   		  }
-   		  succ = true;
-   		  enableButtons();
-   		  $( "#read_file" ).button( "disable" );
-   		  $( "#add_sequence" ).button( "disable" );
-   		  $( ".inner_beg" ).append( $("<p></p>").text("Dane zostaly pobrane z pliku."));
-   	  }, 'text');  	  
-});
+	  $('#file_input').trigger('click');
+  });
   
   $("#calc").click(function() {
 	    /* performance.now() jest dokladniejsze i nie zalezy od zegara systemowego uzytkownika,
@@ -165,8 +150,44 @@ document.addEventListener("DOMContentLoaded", function() {
     dumpMatrix(calculateE(Q, P), 4);
     $( "#accordion" ).accordion( "option", "active", 4 );
 	$( this ).button( "disable" );
-  })
+  });
+  
+  document.getElementById('file_input')
+		.addEventListener('change', readSingleFile, false);
 });
+
+function readSingleFile(e) {
+  var file = e.target.files[0];
+  if (!file) {
+	return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+	var data = e.target.result;
+	processData(data);
+  };
+  reader.readAsText(file);
+}
+
+function processData(data) {
+  var lines = data.split(/\r\n|\r|\n/g);
+  var g_len = g_sequences.length;
+  for (var i = 0, len = lines.length; i < len; ++i) {
+	  if(lines[i].length==0 || (g_len!=0 && lines[i].length!=g_sequences[g_len-1].length)) {
+		  $("#dialog").dialog('open');
+		  return;
+	  }
+	  g_sequences.push(lines[i]);
+  }
+  
+  enableButtons();
+  $( "#read_file" ).button( "disable" );
+  $( "#add_sequence" ).button( "disable" );
+  
+  g_sequences.forEach(function(sequence) {
+	$( ".inner_beg" ).append( $("<p></p>").text(sequence));
+  });
+}
 
 function calculateA(sequences) {
   var n = sequences[0].length;

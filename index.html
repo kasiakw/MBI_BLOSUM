@@ -40,7 +40,8 @@
 	<div>
 		<input type="text" id="sequence">
 		<button id="add_sequence" type="submit">Dodaj</button>
-		<button id="read_file" title="Wczytany zostanie plik dane.txt">Wczytaj z pliku</button>
+		<button id="read_file">Wczytaj z pliku</button>
+		<input id="file_input" type="file" style="display:none"/>
 		<button id="clear">Wyczyść</button>
 		<button id="calc_a">Następny etap</button>
 		<button id="calc" title="Wykonany zostanie algorytm wraz z pomiarem czasu.">Wykonaj</button>
@@ -49,7 +50,7 @@
     		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Sekwencja musi być niepusta oraz tej samej długości co pozostałe.</p>    
 		</div>
 		<div id="dialog_file" title="Błąd dostępu do pliku">
-    		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Nie udało się otworzyć pliku dane.txt.</p>    
+    		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Nie udało się otworzyć pliku.</p>    
 		</div>
     	<div class="inner_beg"> </div> 
     </div>
